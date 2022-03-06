@@ -1,203 +1,262 @@
 const inquirer = require("inquirer");
-//const Employee = require("./Employee");
-//const Manager = require("./Manager");
-//const Engineer = require("./Engineer");
-//const Intern = require("./Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 
-const questions = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "title",
-      message: "What is the name of the Manager (Required)",
-      validate: (mgrName) => {
-        if (mgrName) {
-          return true;
-        } else {
-          console.log("Please enter the Manager's name!");
-          return false;
-        }
-      },
-    },
-  ]);
-};
+let arr = [];
 
-async function init() {
-    try {
-      const answers = await questions();
-  
-      console.log(JSON.stringify(answers, null, "\t"));
-  
-      console.log("Successful questions");
-    } catch (err) {
-      console.log(err);
-    }
+function init() {
+  function mgrQuestions() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "mgrName",
+          message: "What is the name of the Manager? (Required)",
+          validate: (mgrName) => {
+            if (mgrName) {
+              return true;
+            } else {
+              console.log("Please enter the Manager's name!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "id",
+          message: "What is the Id of the Manager? (Required)",
+          validate: (mgrId) => {
+            if (mgrId) {
+              return true;
+            } else {
+              console.log("Please enter the Manager's Id!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "email",
+          message: "What is the Email address of the Manager? (Required)",
+          validate: (mgrEmail) => {
+            if (mgrEmail) {
+              return true;
+            } else {
+              console.log("Please enter the Manager's Email!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "officeNumber",
+          message: "What is the Office Number of the Manager? (Required)",
+          validate: (mgrOfficeNumber) => {
+            if (mgrOfficeNumber) {
+              return true;
+            } else {
+              console.log("Please enter the Manager's Office Number!");
+              return false;
+            }
+          },
+        },
+      ])
+      .then((answers) => {
+        const manager = new Manager(
+          answers.mgrName,
+          answers.id,
+          answers.email,
+          answers.officeNumber
+        );
+        arr.push(manager);
+        addTeam();
+      });
   }
-init();
 
-// jest RPG inspo
-// Team.prototype.initializeTeam = function() {
-//     inquirer
-//     .prompt({
-//         type: "text",
-//         name: "name",
-//         message: "Hello! What is the name of the Manager?"
-//     })
-//     .then (({ name }) => {
-//         this.manager = new Manager(name);
-//     })
-// }
-// module.exports = Team;
+  function addTeam() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message:
+            "What employee would you like to add to the team? (Required)",
+          name: "addEmployee",
+          choices: ["Engineer", "Intern", "No others to add."],
+          validate: (addEmployeeInput) => {
+            if (addEmployeeInput) {
+              return true;
+            } else {
+              console.log("Please choose an option provided!");
+              return false;
+            }
+          },
+        },
+      ])
+      .then(function (userInput) {
+        switch (userInput.addEmployee) {
+          case "Engineer":
+            engQuestions();
+            break;
+          case "Intern":
+            internQuestions();
+            break;
+          default:
+            console.log(arr);
+          // htmlPage();
+        }
+      });
+  }
 
-// README GENERATOR
-// // TODO: Include packages needed for this application
-// const inquirer = require("inquirer");
-// const fs = require("fs");
-// const util = require("util");
-// const generateMarkdown = require("./Develop/utils/generateMarkdown.js");
-// const writeFileAsync = util.promisify(fs.writeFile);
+  function engQuestions() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "engName",
+          message: "What is the name of the Engineer? (Required)",
+          validate: (engName) => {
+            if (engName) {
+              return true;
+            } else {
+              console.log("Please enter the Engineer's name!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "id",
+          message: "What is the Id of the Engineer? (Required)",
+          validate: (engId) => {
+            if (engId) {
+              return true;
+            } else {
+              console.log("Please enter the Engineer's Id!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "email",
+          message: "What is the Email address of the Engineer? (Required)",
+          validate: (engEmail) => {
+            if (engEmail) {
+              return true;
+            } else {
+              console.log("Please enter the Engineer's Email!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "github",
+          message: "What is the GitHub username of the Engineer? (Required)",
+          validate: (engGithub) => {
+            if (engGithub) {
+              return true;
+            } else {
+              console.log("Please enter the Engineer's GitHub username!");
+              return false;
+            }
+          },
+        },
+      ])
+      .then((answers) => {
+        const engineer = new Engineer(
+          answers.engName,
+          answers.id,
+          answers.email,
+          answers.github
+        );
+        arr.push(engineer);
+        addTeam();
+      });
+  }
 
-// // TODO: Create an array of questions for user input
-// const questions = () => {
-//   return inquirer.prompt([
-//     {
-//       type: "input",
-//       name: "title",
-//       message: "What is your project title? (Required)",
-//       validate: (titleInput) => {
-//         if (titleInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project title!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "description",
-//       message: "What is your project description? (Required)",
-//       validate: (descriptionInput) => {
-//         if (descriptionInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project description!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "installation",
-//       message: "What are your installation instructions? (Required)",
-//       validate: (installationInput) => {
-//         if (installationInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project installation instructions!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "usage",
-//       message: "What is your Usage Information? (Required)",
-//       validate: (usageInput) => {
-//         if (usageInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project usage information!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "list",
-//       name: "license",
-//       message: "What is your project license? (Required)",
-//       choices: ["Apache_2.0", "ISC", "MIT"],
-//       validate: (licenseInput) => {
-//         if (licenseInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project license!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "contributor",
-//       message: "Who are the contributors to your project? (Required)",
-//       validate: (contributorInput) => {
-//         if (contributorInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter the contributors!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "tests",
-//       message: "What are your project test instructions? (Required)",
-//       validate: (testsInput) => {
-//         if (testsInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your project tests!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "username",
-//       message: "What is your GitHub username? (Required)",
-//       validate: (usernameInput) => {
-//         if (usernameInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your GitHub username!");
-//           return false;
-//         }
-//       },
-//     },
-//     {
-//       type: "input",
-//       name: "email",
-//       message: "What is your e-mail address? (Required)",
-//       validate: (emailInput) => {
-//         if (emailInput) {
-//           return true;
-//         } else {
-//           console.log("Please enter your e-mail address!");
-//           return false;
-//         }
-//       },
-//     },
-//   ]);
-// };
+  function internQuestions() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "internName",
+          message: "What is the name of the Intern? (Required)",
+          validate: (internName) => {
+            if (internName) {
+              return true;
+            } else {
+              console.log("Please enter the Intern's name!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "id",
+          message: "What is the Id of the Intern? (Required)",
+          validate: (internId) => {
+            if (internId) {
+              return true;
+            } else {
+              console.log("Please enter the Intern's Id!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "email",
+          message: "What is the Email address of the Intern? (Required)",
+          validate: (internEmail) => {
+            if (internEmail) {
+              return true;
+            } else {
+              console.log("Please enter the Intern's Email!");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          name: "school",
+          message: "What School does the Intern attend? (Required)",
+          validate: (internSchool) => {
+            if (internSchool) {
+              return true;
+            } else {
+              console.log("Please enter the Intern's school!");
+              return false;
+            }
+          },
+        },
+      ])
+      .then((answers) => {
+        const intern = new Intern(
+          answers.internName,
+          answers.id,
+          answers.email,
+          answers.school
+        );
+        arr.push(intern);
+        addTeam();
+      });
+  }
 
-// // TODO: Create a function to write README file
-// // TODO: Create a function to initialize app
+  mgrQuestions();
+}
+
 // async function init() {
 //   try {
-//     const answers = await questions();
+//     const answers = await mgrQuestions();
 
 //     console.log(JSON.stringify(answers, null, "\t"));
 
-//     const readme = generateMarkdown(answers);
-
-//     await writeFileAsync("README.md", readme);
-
-//     console.log("Successfully wrote to README.md");
+//     console.log("Successful questions");
 //   } catch (err) {
 //     console.log(err);
 //   }
 // }
 
-// // Function call to initialize app
-// init();
+init();
