@@ -2,6 +2,11 @@ const inquirer = require("inquirer");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const generateTeam = require("./dist/page-template.js");
+const fs = require("fs");
+const path = require("path");
+const fileDirectory = path.resolve(__dirname, "dist");
+const filePath = path.join(fileDirectory, "team.html");
 
 let arr = [];
 
@@ -103,7 +108,7 @@ function init() {
             break;
           default:
             console.log(arr);
-          // htmlPage();
+            generateHTMLPage();
         }
       });
   }
@@ -243,6 +248,20 @@ function init() {
         addTeam();
       });
   }
+
+  const generateHTMLPage = () => {
+    console.log("Team complete!");
+    fs.writeFileSync(filePath, generateTeam(arr), "utf-8");
+  };
+  // function writeFile() {
+  // fs.writeFile("team.html", generateTeam(arr), (err) => {
+  //     if (err){
+  //     console.log(err);
+  // } else {
+  //     console.log("File written successfully")
+  // }
+  // });
+  //}
 
   mgrQuestions();
 }

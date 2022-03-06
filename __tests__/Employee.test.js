@@ -22,4 +22,28 @@ test("can set email via constructor arguments", () => {
   const e = new Employee("Bob", 1234, email);
   expect(e.email).toBe(email);
 });
-// name could be anything, string, id is number but the name of it can be whatever
+
+test("test getName", () => {
+  const testName = "Bob";
+  const name = new Employee(testName);
+  expect(name.getName()).toBe(testName);
+})
+
+test("test getID", () => {
+  const id = 1234;
+  const e = new Employee("Bob", id);
+  expect(e.getID()).toBe(id);
+})
+
+test("test getEmail", () => {
+  const email = "email";
+  const e = new Employee("Bob", 1234, email);
+  expect(e.getEmail()).toBe(email);
+})
+
+test("test getRole.", () => {
+  const returnValue = "Employee";
+  const e = new Employee("Bob", 1234, "email");
+  expect(e.getRole()).toBe(returnValue);
+})
+// name(e) could be anything, string, id is number but the name of it can be whatever
