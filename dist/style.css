@@ -1,0 +1,36 @@
+:root {
+  --primary-color: #a5abac;
+  --secondary-color: #242649;
+  --tertiary-color: #a6cbce;
+}
+
+* {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+h1 {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 15px;
+    text-align: center;
+}
+
+.cards {
+    background-color: var(--tertiary-color);
+    margin: 5px;
+    padding: 15px;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}

@@ -3,13 +3,13 @@ const generateTeam = (team) => {
 
   const generateManager = (manager) => {
     let managerHtml = `
-  <div>
-      <div>
+  <div class="cards">
+      <div >
           <h2>${manager.getName()}</h2>
           <h3>Manager</h3>
       </div>
       <div>
-          <ul>
+          <ul class="card-info">
               <li>ID: ${manager.getID()}</li>
               <li>Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
               <li>Office number: ${manager.getOfficeNumber()}</li>
@@ -22,13 +22,13 @@ const generateTeam = (team) => {
 
   const generateEngineer = (engineer) => {
     let engineerHtml = `
-  <div>
+  <div class="cards">
       <div>
           <h2>${engineer.getName()}</h2>
           <h3>Engineer</h3>
       </div>
       <div>
-          <ul>
+          <ul class="card-info">
               <li>ID: ${engineer.getID()}</li>
               <li>Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
               <li>GitHub: <a href="https://github.com/${engineer.getGithub()}" target="_blank" rel="noopener noreferrer">${engineer.getGithub()}</a></li>
@@ -41,13 +41,13 @@ const generateTeam = (team) => {
 
   const generateIntern = (intern) => {
     let internHtml = `
-  <div>
+  <div class="cards">
       <div>
           <h2>${intern.getName()}</h2>
           <h3>Intern</h3>
       </div>
       <div>
-          <ul>
+          <ul class="card-info">
               <li>ID: ${intern.getID()}</li>
               <li>Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
               <li>School: ${intern.getSchool()}</li>
@@ -86,7 +86,7 @@ module.exports = (team) => {
   </head>
   <body>
       <h1>My Team</h1>
-      <div>
+      <div class="flex-container">
         ${generateTeam(team)}
       </div>
   </body>
